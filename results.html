@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz Results</title>
+</head>
+<body>
+    <h1>Quiz Results</h1>
+    <table border="1">
+        <tr>
+            <th>Participant</th>
+            <th>Score</th>
+        </tr>
+        {% for participant, score in scores %}
+            <tr>
+                <td>{{ participant }}</td>
+                <td>{{ score }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

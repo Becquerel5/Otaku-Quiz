@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anime Quiz</title>
+</head>
+<body>
+    <h1>Anime Quiz</h1>
+    <form method="POST" action="/submit">
+        <table border="1">
+            <tr>
+                <th>Participant</th>
+                {% for question in questions %}
+                    <th>{{ question.question_text }}</th>
+                {% endfor %}
+            </tr>
+            {% for participant in participants %}
+                <tr>
+                    <td>{{ participant.name }}</td>
+                    {% for question in questions %}
+                        <td><input type="checkbox" name="response_{{ participant.id }}_{{ question.id }}"></td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

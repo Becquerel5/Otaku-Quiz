@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Custom Textarea with Quill</title>
+  <!-- Include Quill styles -->
+  <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+  <style>
+    /* Optional: Style to visually hide the textarea but keep it focusable */
+    #question_text {
+      position: absolute;
+      left: -9999px;
+    }
+  </style>
+</head>
+<body>
+
+////
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Participant Submission</title>
+    <style>
+        .participant-input {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <form action="save.php" method="POST" onsubmit="return validateForm()">
+        <div id="participants-container">
+            <div class="participant-input">
+                <input type="text" name="participant_names[]" placeholder="Nom du participant" required>
+            </div>
+        </div>
+        <button type="button" onclick="addParticipant()">Add Participant</button>
+        <button type="submit">Submit</button>
+        <div id="error-message" style="color: red; display: none;">Please enter at least one participant name.</div>
+    </form>
+
+    <script>
+        function addParticipant() {
+            const participantsContainer = document.getElementById('participants-container');
+            const newInput = document.createElement('div');
+            newInput.className = 'participant-input';
+            newInput.innerHTML = '<input type="text" name="participant_names[]" placeholder="Nom du participant" required>';
+            participantsContainer.appendChild(newInput);
+        }
+
+        function validateForm() {
+            const inputs = document.querySelectorAll('input[name="participant_names[]"]');
+            for (let input of inputs) {
+                if (input.value.trim() === '') {
+                    document.getElementById('error-message').style.display = 'block';
+                    return false; // Prevent form submission
+                }
+            }
+            document.getElementById('error-message').style.display = 'none';
+            return true; // Allow form submission
+        }
+    </script>
+</body>
+</html>
+/////
+
+
+
+
+
+
+
+
+
+
+    
+  <form action="admin_process.php" method="POST" onsubmit="return syncEditorContent()">
+    <div id="editor-container" style="height: 200px;"></div>
+    <textarea name="question_text" id="question_text" placeholder="Texte de la question"></textarea>
+    <button type="submit">Submit</button>
+    <div id="error-message" style="color: red; display: none;">Please enter your question.</div>
+  </form>
+
+  <!-- Include Quill library -->
+  <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+  <script>
+    // Initialize Quill editor
+    var quill = new Quill('#editor-container', {
+      theme: 'snow',
+      modules: {
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ['bold', 'italic', 'underline'],
+          [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ['link', 'image'],
+          [{ 'color': [] }, { 'background': [] }],
+          [{ 'align': [] }],
+          ['clean']
+        ]
+      }
+    });
+
+    function syncEditorContent() {
+      // Get the HTML content from the Quill editor
+      var htmlContent = quill.root.innerHTML;
+      // Set the content of the hidden textarea
+      document.getElementById('question_text').value = htmlContent;
+
+      // Validate that the Quill editor is not empty
+      if (quill.getText().trim().length === 0) {
+        document.getElementById('error-message').style.display = 'block';
+        return false; // Prevent form submission
+      }
+      
+      return true; // Allow form submission
+    }
+  </script>
+</body>
+</html>
